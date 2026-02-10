@@ -1,10 +1,9 @@
-=============================================================================
 PROJET 7 : SYSTÈME DE RECOMMANDATION DE PRODUITS (FILTRAGE COLLABORATIF)
 Module   : Structures de Données Avancées et Théorie des Graphes
 Encadré par : Pr. Ouafae Baida
 Lieu     : Faculté des Sciences et Techniques de Tanger (FSTT)
 Date     : Janvier 2026
-=============================================================================
+------------------------
 
 1. ÉQUIPE DE RÉALISATION
 ------------------------
@@ -88,5 +87,3 @@ dans le fichier 'donnees.txt' :
 * Cas 2 : Profil "Professionnel" (Testez l'ID 18 - Manal)
   -> Le système détecte une similarité avec Ahmed et Karim.
   -> Recommandation attendue : Matériel de bureau (Webcam Pro, Clavier Silent).
-
-=============================================================================
