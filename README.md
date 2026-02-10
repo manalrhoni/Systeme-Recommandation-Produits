@@ -20,7 +20,7 @@ Ce projet est le fruit du travail collaboratif de :
 * **Souhaila Benaouate**
 * **Meryem El Khoumri**
 * **Moad Afylal**
-* **Sofyane Fritit**
+* **Sofyane Fritit***
 
 ---
 
