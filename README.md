@@ -1,89 +1,97 @@
-PROJET 7 : SYSTÈME DE RECOMMANDATION DE PRODUITS (FILTRAGE COLLABORATIF)
-Module   : Structures de Données Avancées et Théorie des Graphes
-Encadré par : Pr. Ouafae Baida
-Lieu     : Faculté des Sciences et Techniques de Tanger (FSTT)
-Date     : Janvier 2026
-------------------------
+# PROJET 7 : SYSTÈME DE RECOMMANDATION DE PRODUITS
 
-1. ÉQUIPE DE RÉALISATION
-------------------------
-Ce projet a été conçu et développé par :
-* Manal Rhoni Aref
-* Souhaila Benaouate
-* Meryem El Khoumri
-* Moad Afylal
-* Sofyane Fritit
+## Algorithme de Filtrage Collaboratif basé sur la Théorie des Graphes
 
-2. DESCRIPTION DU PROJET
-------------------------
-Ce projet implémente un moteur de recommandation inspiré des systèmes utilisés 
-par les géants du e-commerce (ex: Amazon). L'objectif est de suggérer des 
-produits pertinents à un utilisateur en analysant son historique d'achats 
-et en le comparant à celui des autres utilisateurs.
+**Module :** Structures de Données Avancées et Théorie des Graphes
 
-Le cœur du système repose sur la modélisation des données sous forme de 
-Graphe Biparti (Utilisateurs <-> Produits) et l'utilisation de l'indice 
-de similarité de Jaccard pour identifier les voisinages (k-Nearest Neighbors).
+**Encadré par :** Pr. Ouafae Baida
 
-3. ARCHITECTURE TECHNIQUE (FICHIERS)
-------------------------------------
-Le code source est structuré de manière modulaire pour garantir la lisibilité 
-et la maintenance :
+**Institution :** Faculté des Sciences et Techniques de Tanger (FSTT)
 
-* main.py             : Point d'entrée de l'application. Gère le menu interactif.
-* models.py           : Définit les entités du graphe (Classes Utilisateur et Produit).
-* graphe.py           : Structure de données du Graphe Biparti (Tables de hachage).
-* recommandation.py   : Logique algorithmique (Calcul Jaccard, Tri, Filtrage).
-* gestion_donnees.py  : Gestion des Entrées/Sorties (Lecture fichier & Export Graphviz).
-* donnees.txt         : Base de données textuelle contenant l'historique des achats.
+**Date :** Janvier 2026
 
-4. PRÉREQUIS ET INSTALLATION
-----------------------------
-* Langage : Python 3.x (Version 3.8 ou supérieure recommandée).
-* Bibliothèques : Aucune installation externe n'est requise. Le projet utilise 
-  uniquement les modules standards de Python (sys, webbrowser, urllib).
+---
 
-5. INSTRUCTIONS D'EXÉCUTION
----------------------------
-Pour tester le projet et reproduire les résultats, suivez ces étapes :
+### 1. ÉQUIPE DE RÉALISATION
 
-Étape 1 : Lancement
-   Ouvrez un terminal dans le dossier du projet et exécutez :
-   $ python main.py
+Ce projet est le fruit du travail collaboratif de :
 
-Étape 2 : Chargement des données
-   Dans le menu, choisissez l'option [1]. Le système va lire le fichier 
-   'donnees.txt' et construire le graphe en mémoire.
+* **Manal Rhoni Aref**
+* **Souhaila Benaouate**
+* **Meryem El Khoumri**
+* **Moad Afylal**
+* **Sofyane Fritit**
 
-Étape 3 : Vérification (Facultatif)
-   Choisissez l'option [2] pour afficher les statistiques (Nombre de nœuds/arêtes) 
-   ou l'option [3] pour visualiser graphiquement le réseau dans votre navigateur.
+---
 
-Étape 4 : Génération de Recommandations
-   Choisissez l'option [4] pour lancer l'algorithme.
-   - Le système affichera la liste des utilisateurs disponibles.
-   - Entrez l'ID d'un utilisateur cible (ex: 16, 18...).
-   - Le système affichera ses voisins les plus proches puis les produits suggérés.
+### 2. PRÉSENTATION DU PROJET
 
-6. DÉTAILS DE L'IMPLÉMENTATION
-------------------------------
-* Modélisation : Nous avons utilisé un Graphe Biparti Non-Orienté où les arêtes 
-  représentent exclusivement les relations d'achat.
-* Stockage : Utilisation de dictionnaires Python pour garantir une complexité 
-  d'accès aux nœuds en O(1).
-* Similarité : L'indice de Jaccard a été choisi car il est particulièrement 
-  adapté aux ensembles binaires (Achat / Pas d'achat).
-  Formule : J(A,B) = |Achats_A ∩ Achats_B| / |Achats_A ∪ Achats_B|
+Inspiré des systèmes de pointe utilisés par les leaders du e-commerce (tels qu'Amazon), ce moteur de recommandation analyse le comportement d'achat pour suggérer des produits hautement pertinents.
 
-7. SCÉNARIOS DE TEST (DÉMONSTRATION)
-------------------------------------
-Pour démontrer la pertinence des résultats, nous avons inclus des profils types 
-dans le fichier 'donnees.txt' :
+Le système repose sur deux piliers scientifiques :
 
-* Cas 1 : Profil "Gamer" (Testez l'ID 16 - Sofyane)
-  -> Le système détecte une similarité avec Moad et Yassine.
-  -> Recommandation attendue : Accessoires de jeu (Souris RGB, Chaise Gaming).
+1. **Modélisation par Graphe Biparti :** Représentation des interactions entre deux ensembles distincts (Utilisateurs  Produits).
+2. **Mesure de Proximité :** Utilisation de l'indice de **similarité de Jaccard** pour identifier les voisinages (k-Nearest Neighbors) et prédire les préférences futures.
 
-* Cas 2 : Profil "Professionnel" (Testez l'ID 18 - Manal)
-  -> Le système détecte une similarité avec Ahmed et Karim.
-  -> Recommandation attendue : Matériel de bureau (Webcam Pro, Clavier Silent).
+---
+
+### 3. ARCHITECTURE TECHNIQUE
+
+Le code adopte une structure modulaire, favorisant la scalabilité et la maintenance :
+
+* `main.py` : Point d'entrée principal et gestion du menu interactif.
+* `models.py` : Définition des entités (Classes *Utilisateur* et *Produit*).
+* `graphe.py` : Implémentation du Graphe Biparti via des tables de hachage.
+* `recommandation.py` : Cœur algorithmique (Calcul de Jaccard, Tri et Filtrage).
+* `gestion_donnees.py` : Gestion des flux d'E/S (Parsing de fichiers et export Graphviz).
+* `donnees.txt` : Base de données textuelle des historiques d'achats.
+
+---
+
+### 4. CONFIGURATION ET PRÉREQUIS
+
+* **Langage :** Python 3.8+
+* **Dépendances :** Aucune bibliothèque tierce n'est requise. Le projet exploite exclusivement la bibliothèque standard Python (`sys`, `webbrowser`, `urllib`), garantissant une portabilité totale.
+
+---
+
+### 5. GUIDE D'UTILISATION
+
+Suivez ces étapes pour tester les fonctionnalités du moteur :
+
+1. **Initialisation :** Exécutez `$ python main.py` depuis votre terminal.
+2. **Chargement :** Sélectionnez l'option **[1]** pour charger `donnees.txt` et compiler le graphe en mémoire.
+3. **Analyse & Visualisation (Optionnel) :** * Option **[2]** : Statistiques du réseau (nœuds et arêtes).
+* Option **[3]** : Visualisation graphique du réseau via votre navigateur.
+
+
+4. **Recommandation :** Choisissez l'option **[4]**.
+* Sélectionnez un utilisateur cible (ex: ID 16 ou 18).
+* Le système identifie instantanément les "voisins" similaires et génère une liste de suggestions priorisées.
+
+
+
+---
+
+### 6. MÉTHODOLOGIE D'IMPLÉMENTATION
+
+* **Modélisation :** Graphe biparti non-orienté où chaque arête symbolise une transaction.
+* **Optimisation :** Utilisation intensive des dictionnaires Python pour des recherches de nœuds en complexité constante .
+* **Logique Mathématique :** L'indice de Jaccard est utilisé pour comparer les ensembles d'achats :
+
+
+
+---
+
+### 7. SCÉNARIOS DE DÉMONSTRATION
+
+Des profils types ont été configurés pour valider la précision de l'algorithme :
+
+* **Profil "Gamer" (ID 16 - Sofyane) :**
+* *Analyse :* Forte corrélation détectée avec les profils de Moad et Yassine.
+* *Résultat :* Suggestions d'accessoires (Souris RGB, Chaise Gaming).
+
+
+* **Profil "Professionnel" (ID 18 - Manal) :**
+* *Analyse :* Proximité identifiée avec Ahmed et Karim.
+* *Résultat :* Suggestions de matériel de bureau (Webcam Pro, Clavier Silent).
