@@ -1,4 +1,3 @@
-# recommandation.py
 # -----------------------------------------------------------------------------
 # Projet     : Système de Recommandation de Produits (Sujet 7)
 # Module     : recommandation.py
@@ -149,3 +148,47 @@ class MoteurRecommandation:
         resultats = sorted(suggestions.items(), key=lambda x: x[1], reverse=True)
         
         return resultats
+
+    def evaluer_precision_rappel(self, id_target_user):
+        """
+        Évalue le modèle avec la technique 'Leave-One-Out'.
+        Retourne la Précision et le Rappel (Recall).
+        """
+        # 1. Récupérer l'utilisateur
+        user = self.graphe.utilisateurs.get(id_target_user)
+        
+        # S'il n'existe pas ou a moins de 2 achats, on ne peut pas tester
+        if not user or len(user.achats) < 2:
+            return None, None
+
+        achats_liste = list(user.achats)
+        
+        # 2. CACHER UN PRODUIT (Création du Test Set)
+        achat_cache = achats_liste[-1] # On cache le dernier produit
+        user.achats.remove(achat_cache)
+        
+        # Si votre graphe est bidirectionnel strict, il faut aussi l'enlever du produit :
+        if user in achat_cache.acheteurs:
+            achat_cache.acheteurs.remove(user)
+
+        # 3. GÉNÉRER LES RECOMMANDATIONS (Sur le Train Set)
+        recommandations = self.generer_recommandations(id_target_user)
+        
+        # Extraire juste les objets 'produit' des recommandations
+        produits_recommandes = [prod for prod, score in recommandations]
+
+        # 4. VÉRIFIER SI LE PRODUIT CACHÉ A ÉTÉ TROUVÉ
+        vrai_positif = 1 if achat_cache in produits_recommandes else 0
+
+        # 5. CALCULER LES MÉTRIQUES
+        # Précision = (Produits corrects trouvés) / (Total recommandé)
+        precision = vrai_positif / len(produits_recommandes) if len(produits_recommandes) > 0 else 0.0
+        
+        # Rappel = (Produits corrects trouvés) / (Total caché, qui est 1 ici)
+        rappel = vrai_positif / 1.0 
+
+        # 6. RESTAURER LE GRAPHE (Très important pour ne pas casser la data)
+        user.achats.add(achat_cache)
+        achat_cache.acheteurs.add(user)
+
+        return precision, rappel

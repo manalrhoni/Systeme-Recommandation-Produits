@@ -1,4 +1,3 @@
-# main.py
 # -----------------------------------------------------------------------------
 # Projet     : Système de Recommandation de Produits (Sujet 7)
 # Module     : main.py
@@ -88,7 +87,7 @@ def main():
                 # Ouvre le navigateur par défaut avec le diagramme
                 ouvrir_graphviz_web(graphe)
 
-        # --- OPTION 4 : Cœur du projet (Recommandation) ---
+        # --- OPTION 4 : Cœur du projet (Recommandation et Évaluation) ---
         elif choix == "4":
             # 1. On affiche d'abord la liste pour guider l'utilisateur
             if afficher_liste_utilisateurs(graphe):
@@ -121,6 +120,23 @@ def main():
                             for produit, score in recommandations:
                                 # Affichage propre
                                 print(f"   * {produit.nom:<25} (Score de confiance : {score:.2f})")
+                                
+                        # -----------------------------------------------------------------
+                        # NOUVELLE ÉTAPE : ÉVALUATION (Précision et Rappel)
+                        # -----------------------------------------------------------------
+                        print("\n--- ÉVALUATION DU MODÈLE (Leave-One-Out) ---")
+                        precision, rappel = moteur.evaluer_precision_rappel(id_user)
+                        
+                        if precision is not None:
+                            print(f" > Précision : {precision:.2f} ({precision * 100:.0f}%)")
+                            print(f" > Rappel    : {rappel:.2f} ({rappel * 100:.0f}%)")
+                            if rappel == 1.0:
+                                print(" >> [SUCCÈS] Le modèle a réussi à deviner un achat masqué de cet utilisateur !")
+                            else:
+                                print(" >> [INFO] Le système n'a pas pu prédire l'achat masqué pour ce profil.")
+                        else:
+                            print(" [INFO] Pas assez d'achats pour évaluer cet utilisateur (minimum 2 requis).")
+
                     else:
                         print(f"[ERREUR] L'ID {id_user} n'existe pas dans le graphe.")
                         
